@@ -32,6 +32,7 @@ jobs:
         if: ${{ always() }}
         uses: jdcargile/ms-teams-notification@v1.4
         with:
+          github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
           notification-summary: |
             :white_check_mark: Build and deploy succeeded on branch `${{ github.ref }}` by `${{ github.actor }}`.
@@ -40,6 +41,7 @@ jobs:
         if: ${{ failure() }}
         uses: jdcargile/ms-teams-notification@v1.4
         with:
+          github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
           notification-summary: |
             :x: Build and deploy failed on branch `${{ github.ref }}` by `${{ github.actor }}`.
@@ -47,6 +49,7 @@ jobs:
       - name: Send Start Message
         uses: jdcargile/ms-teams-notification@v1.4
         with:
+          github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
           notification-summary: |
             :rocket: Build and deploy started on branch `${{ github.ref }}` by `${{ github.actor }}`.
