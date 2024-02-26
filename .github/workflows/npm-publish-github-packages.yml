@@ -30,23 +30,23 @@ jobs:
 
       - name: Send Success Message
         if: ${{ always() }}
-        uses: microsoft/teams-notification@v1
+        uses: jdcargile/ms-teams-notification@v1.4
         with:
-          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          message: |
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          notification-summary: |
             :white_check_mark: Build and deploy succeeded on branch `${{ github.ref }}` by `${{ github.actor }}`.
 
       - name: Send Failure Message
         if: ${{ failure() }}
-        uses: microsoft/teams-notification@v1
+        uses: jdcargile/ms-teams-notification@v1.4
         with:
-          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          message: |
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          notification-summary: |
             :x: Build and deploy failed on branch `${{ github.ref }}` by `${{ github.actor }}`.
 
       - name: Send Start Message
-        uses: microsoft/teams-notification@v1
+        uses: jdcargile/ms-teams-notification@v1.4
         with:
-          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          message: |
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          notification-summary: |
             :rocket: Build and deploy started on branch `${{ github.ref }}` by `${{ github.actor }}`.
