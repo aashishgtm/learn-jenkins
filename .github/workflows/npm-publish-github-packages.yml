@@ -1,0 +1,52 @@
+name: Send Event Messages to Microsoft Teams
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        run: |
+          # Add your deployment commands here
+
+      - name: Send Success Message
+        if: ${{ always() }}
+        uses: microsoft/teams-notification@v1
+        with:
+          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          message: |
+            :white_check_mark: Build and deploy succeeded on branch `${{ github.ref }}` by `${{ github.actor }}`.
+
+      - name: Send Failure Message
+        if: ${{ failure() }}
+        uses: microsoft/teams-notification@v1
+        with:
+          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          message: |
+            :x: Build and deploy failed on branch `${{ github.ref }}` by `${{ github.actor }}`.
+
+      - name: Send Start Message
+        uses: microsoft/teams-notification@v1
+        with:
+          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          message: |
+            :rocket: Build and deploy started on branch `${{ github.ref }}` by `${{ github.actor }}`.
