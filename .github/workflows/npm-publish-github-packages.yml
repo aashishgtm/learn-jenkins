@@ -24,32 +24,27 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy
-        run: |
-          # Add your deployment commands here
-
-      - name: Send Success Message
-        if: ${{ always() }}
+      - name: Send Build Success Message
+        if: ${{ success() }}
         uses: jdcargile/ms-teams-notification@v1.4
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
           notification-summary: |
-            :white_check_mark: Build and deploy succeeded on branch `${{ github.ref }}` by `${{ github.actor }}`.
+            :white_check_mark: Build succeeded on branch `${{ github.ref }}` by `${{ github.actor }}`.
 
-      - name: Send Failure Message
+      - name: Send Build Failure Message
         if: ${{ failure() }}
         uses: jdcargile/ms-teams-notification@v1.4
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
           notification-summary: |
-            :x: Build and deploy failed on branch `${{ github.ref }}` by `${{ github.actor }}`.
+            :x: Build failed on branch `${{ github.ref }}` by `${{ github.actor }}`.
 
-      - name: Send Start Message
-        uses: jdcargile/ms-teams-notification@v1.4
-        with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          notification-summary: |
-            :rocket: Build and deploy started on branch `${{ github.ref }}` by `${{ github.actor }}`.
+      - name: Deploy
+        run: |
+          # Add your deployment commands here
+
+
+
