@@ -32,7 +32,7 @@ jobs:
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
           notification-color: 28a745 
           notification-summary: |
-            1F680 Build succeeded on branch `${{ github.ref }}` by `${{ github.actor }}`.
+            &#x1F680; Build succeeded on branch `${{ github.ref }}` by `${{ github.actor }}`.
 
       - name: Send Build Failure Message
         if: ${{ failure() }}
@@ -42,7 +42,7 @@ jobs:
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
           notification-color: dc3545
           notification-summary: |
-            1F6A8 Build failed on branch `${{ github.ref }}` by `${{ github.actor }}`.
+            &#x1F6A8; Build failed on branch `${{ github.ref }}` by `${{ github.actor }}`.
 
       - name: Deploy
         run: |
